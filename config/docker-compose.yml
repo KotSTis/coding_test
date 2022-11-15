@@ -1,0 +1,19 @@
+version: '3.8'
+
+services: 
+    efo_db:
+      container_name: efo_db
+      hostname: efo_db
+      image: postgres
+      ports:
+        - "${POSTGRES_PORT}:5432"
+      restart: unless-stopped
+      environment:
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+        - POSTGRES_USER=${POSTGRES_USER}
+        - POSTGRES_DB=${POSTGRES_DB}
+      build:
+        context: .
+        dockerfile: ./Dockerfile.db
+      volumes:
+        - /efo_db:/var/lib/postgresql/data/
