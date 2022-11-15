@@ -24,18 +24,10 @@ The pipeline can be run then from the root directory with the following command:
 ```
     python3 data_pipe.py page_size page_number
 ```
-
+Where page_size and page_number are both integers.
 For the limited purposes of the test and the computational power of my machine,
-I process the first 100 terms of the ontology. this can be turned off and the whole ontology processed
-by commenting out the following line in data_pipe.py on line 126
-
-```
-                                       #page_size  #page_number
-    processor = get_pages(terms_url,  sys.argv[1], sys.argv[2])
-```
-
-Input a negative number for the pages and you will download the entire ontology
-
+I processed the first 100 terms of the ontology. This can be turned off and the whole ontology processed
+by giving page_number a negative value.
 
 ## Author's Notes/Remarks:
 The choice to not enforce a foreign key started as a necessity since I was not downloading the entire ontology when developing
