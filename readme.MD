@@ -37,7 +37,7 @@ by commenting out the following line in data_pipe.py on line 126
 Input a negative number for the pages and you will download the entire ontology
 
 
-Author's Notes/Remarks:
+## Author's Notes/Remarks:
 The choice to not enforce a foreign key started as a necessity since I was not downloading the entire ontology when developing
 but also later realized that a parent could be possibly outside of the EFO ontology, so it would not be possible to include those
 parents in the database if we had indeed enforced a foreign key constraint on the parent_id field.
