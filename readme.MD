@@ -1,4 +1,9 @@
-The python requirements can be installed by running
+The python requirements can be installed by running the following command from the root directory:
+
+```
+pip install -r requirements.txt
+```
+
 
 
 The postgres database is spun up from a Docker image, so docker should be installed before.
