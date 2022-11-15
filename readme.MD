@@ -46,8 +46,8 @@ As a proof of concept, id, description and iri were chosen as the columns for th
 is required, that can easily be added on, as we are accessing the entire ontology before selecting our data.
 
 The table structure was chosen because from the limited heuristics on the efo ontology, we notice:
-    - a many to one relationship between synonym and term
-    - a one to many relationship between term and parent links
+    - a many to many relationship between synonym and term
+    - a one to many relationship between term and parent term(links)
 That is why we chose to implement two pivot tables to associate each term
 with its parent links and synonyms.
 
@@ -56,10 +56,6 @@ ie. MONDO:0002122.
 We can easily filter these results through and only choose the terms
 that are returned from the efo ontology get that also only have short codes that start with 'EFO:'
 
-On top of that, when processing the parent links, the design choice was made to not include parents
-that are not in the efo ontology.  
-Again, if these parent links are required in the future, they can easily be included without requiring
-extensive refactoring.
 
 When creating the pivot table to connect a term to its MESH references, I noticed in some cases, there is duplicate refs
 ie. MeSH:00001 and MESH:00001. Some other times though, the case is that MeSH and MESH have different numerical ids.
