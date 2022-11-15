@@ -5,17 +5,24 @@ pip install -r requirements.txt
 ```
 
 
-
 The postgres database is spun up from a Docker image, so docker should be installed before.
-After installing Docker, from within the config directory run:
+After installing Docker, from the root directory:
 
+```
+    cat db_restore.sql | docker exec -i efo_db psql -U codingtest -d efo_db
+```
+
+
+And then from within the config directory run:
 
 ```
     docker-compose up -d
 ```
 
+The pipeline can be run then from the root directory with the following command:
+
 ```
-    cat db_restore.sql | docker exec -i efo_db psql -U codingtest -d efo_db
+    python3 data_pipe.py page_size page_number
 ```
 
 For the limited purposes of the test and the computational power of my machine,
@@ -23,7 +30,8 @@ I process the first 100 terms of the ontology. this can be turned off and the wh
 by commenting out the following line in data_pipe.py on line 126
 
 ```
-    processor = get_pages(terms_url, page_size, pages)
+                                       #page_size  #page_number
+    processor = get_pages(terms_url,  sys.argv[1], sys.argv[2])
 ```
 
 Input a negative number for the pages and you will download the entire ontology

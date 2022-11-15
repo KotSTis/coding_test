@@ -1,10 +1,11 @@
+import sys
 from sqlalchemy import create_engine
 import pandas as pd
 import os
 import psycopg2
 import requests
 from dotenv import load_dotenv
-import collections
+
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 load_dotenv(os.path.join(ROOT_DIR, 'config', '.env'))
 
@@ -123,7 +124,7 @@ def update_destination_table(df, table_name, key_name, engine):
      
 if __name__ == '__main__':
     
-    processor = get_pages(terms_url, 50, 2)
+    processor = get_pages(terms_url, sys.argv[1], sys.argv[2])
     terms = []
     parent_children = []
     mesh_references = []
@@ -152,20 +153,21 @@ if __name__ == '__main__':
     synonyms2 = [x for x in synonyms if x != []]
     
     load_and_process(df, "id", "efo_terms")
+    print("processed terms")
     
     parent_df = pd.DataFrame(parent_children, columns = ['parent_id', 'child_id'])
     df2 = parent_df.dropna(axis=0, how='any')
     load_and_process(df2, "parent_id", "parent_children")
+    print("processed parent children terms")
     
     mesh_df = pd.DataFrame(mesh_references, columns = ['mesh_id', 'term_id'])
-    df = mesh_df[mesh_df['mesh_id'].notna()]
-    
+    df = mesh_df[mesh_df['mesh_id'].notna()]    
     load_and_process(df, "mesh_id", "mesh_terms")
-    #load_and_process(mesh_references)
+    print("processed mesh references")
+    
     synonym_df = pd.DataFrame(synonyms2, columns = ['name', 'term_id'])
-    
-    load_and_process(pd.DataFrame(synonym_df['name']), "name", "synonyms")
-    
+    load_and_process(pd.DataFrame(synonym_df['name']), "name", "synonyms")    
     load_and_process(pd.DataFrame(synonym_df), "name", "synonym_terms")
+    print("processed synonym references")
 
         
